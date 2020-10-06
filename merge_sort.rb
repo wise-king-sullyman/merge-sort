@@ -12,46 +12,16 @@ def merge_sort(unsorted_array)
   merge(sorted_array_left, sorted_array_right)
 end
 
-def merge(sorted_array_left, sorted_array_right)
+def merge(left_array, right_array)
   combined_sorted_array = []
-  until sorted_array_left.empty? || sorted_array_right.empty?
-    if sorted_array_left.first < sorted_array_right.first
-      combined_sorted_array.push sorted_array_left.shift
+  until left_array.empty? || right_array.empty?
+    if left_array.first < right_array.first
+      combined_sorted_array.push left_array.shift
     else
-      combined_sorted_array.push sorted_array_right.shift
+      combined_sorted_array.push right_array.shift
     end
   end
-  push_remaining_numbers_to_array(combined_sorted_array, sorted_array_left, sorted_array_right)
-  combined_sorted_array
+  combined_sorted_array + left_array + right_array
 end
 
-def push_remaining_numbers_to_array(to_array, *from_arrays)
-  from_arrays.each do |from_array|
-    to_array.push from_array.shift until from_array.empty?
-  end
-end
-
-# This method is for testing purposes
-def random_numbers(digits)
-  array = []
-  until array.size == digits
-    array.push(rand(digits))
-    array.uniq!
-  end
-  p "Array to be sorted is: #{array}"
-  array
-end
-
-def test_sorting(digits_to_test)
-  random_number_array = random_numbers(digits_to_test)
-  random_number_array_control = random_numbers(digits_to_test)
-  puts "Sorted array is: #{random_number_array}"
-
-  if merge_sort(random_number_array) == random_number_array_control.sort
-    puts 'Sort was successful!'
-  else
-    puts 'Sort was not successful'
-  end
-end
-
-test_sorting(100)
+p merge_sort([5, 2, 3, 0, 1, 4])
